@@ -1,0 +1,42 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+.input{
+    color: rgb(61, 61, 90);
+    outline : none;
+    border: 1px solid rgb(94, 94, 133,0.5);
+    width: 94%;
+}
+
+.container{
+    margin-top: 3rem;
+    /* border : 2px solid red; */
+}
+
+.form{
+    margin : 0 auto;
+    height: 80vh;
+    width: 40vw;
+    /* border: 2px solid green; */
+}
+
+.icon{
+    color : rgb(94, 94, 105);
+}
+
+
+@media only screen and (max-width: 600px) {
+    .form{
+        height: 100%;
+        min-width: 100vw;
+    }
+
+    .chat{
+        min-height: 85vh;
+        overflow-y: scroll;
+    }
+}
