@@ -2,16 +2,20 @@ import "./App.css";
 import Chat from "./components/Chat";
 import { useChatContext } from "./components/Context";
 import Input from "./components/Input";
+import NavBar from "./components/NavBar";
 
 function App() {
-
-  const {typing} = useChatContext();
+  const { typing } = useChatContext();
   return (
     <>
       <div className="container ">
+          <NavBar />
         <div className="form border">
           {/* Here message display will be done  */}
-            <div className="h-[92%] bg-slate-300  chat overflow-y-auto" style={{height : typing ?  "87%" : "92% "}}>
+          <div
+            className="h-[92%] bg-slate-300  chat overflow-y-auto"
+            style={{ height: typing ? "87%" : "92% " }}
+          >
             <Chat />
           </div>
           {typing && (

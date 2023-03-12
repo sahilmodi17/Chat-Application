@@ -13,7 +13,7 @@
 }
 
 .container{
-    margin-top: 3rem;
+    margin-top: 1rem;
     /* border : 2px solid red; */
 }
 
@@ -29,7 +29,7 @@
 }
 
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 700px) {
     .form{
         height: 100%;
         min-width: 100vw;
