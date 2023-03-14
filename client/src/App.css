@@ -9,7 +9,7 @@
     color: rgb(61, 61, 90);
     outline : none;
     border: 1px solid rgb(94, 94, 133,0.5);
-    width: 94%;
+    width: 100%;
 }
 
 .container{
@@ -29,7 +29,7 @@
 }
 
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 900px) {
     .form{
         height: 100%;
         min-width: 100vw;

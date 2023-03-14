@@ -1,49 +1,48 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { io } from "socket.io-client";
 import { IoSendSharp } from "react-icons/io5";
+import { useOutletContext, useParams } from "react-router-dom";
 import { useChatContext } from "./Context";
 
 const Input = () => {
-  const [socket, setSocket] = useState(null);
   const [msg, setMsg] = useState("");
-  const {setChat , setTyping} = useChatContext()
-  
+  const { setChat, setTyping } = useChatContext();
+  const { socket } = useOutletContext();
+  const { roomId } = useParams();
 
   useEffect(() => {
-    setSocket(io("http://localhost:8000"));
-  }, []);
-
-  
-  useEffect(() => {
+    console.log(socket);
     if (!socket) return;
-    socket.on("message-from-server", (data) => {
-      setChat((prev) => [...prev, { message: data.msg, received: true }]);
+    console.log(socket);
+
+    socket.on("message-from-server", (message) => {
+      console.log(message);
+      setChat((prev) => [...prev, { message:message , received: true }]);
     });
-    socket.on("typing-from-server",()=>{
+    socket.on("typing-from-server", () => {
       setTyping(true);
-    })
-    socket.on("typing-stopped-from-server",()=>{
+    });
+    socket.on("typing-stopped-from-server", () => {
       setTyping(false);
-    })
+    });
   }, [socket]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    socket.emit("send-message", { msg });
-    setChat((prev) => [...prev, { message : msg , received: false }]);
+    socket.emit("send-message", { msg, roomId });
+    setChat((prev) => [...prev, { message: msg, received: false }]);
     setMsg("");
   };
 
-  const onInputChange =(e) =>{
+  const onInputChange = (e) => {
     setMsg(e.target.value);
 
-    socket.emit("typing-started-client");
+    socket.emit("typing-started-client", { roomId });
 
-    setTimeout(()=>{
-      socket.emit("typing-stopped");
-    },1500)
-  }
+    setTimeout(() => {
+      socket.emit("typing-stopped", { roomId });
+    }, 1500);
+  };
 
   return (
     <>
@@ -58,7 +57,10 @@ const Input = () => {
             onChange={onInputChange}
           />
 
-          <IoSendSharp className="ml-1.5 h-10  w-9 icon" onClick={handleSubmit}/>
+          <IoSendSharp
+            className="ml-1.5 h-10  w-9 icon"
+            onClick={handleSubmit}
+          />
         </div>
       </form>
     </>

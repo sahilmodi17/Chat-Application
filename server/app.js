@@ -2,8 +2,8 @@ const express = require("express");
 const app = express();
 
 const http = require("http");
+const { sockets } = require("./socket");
 const httpServer = http.createServer(app);
-
 app.use(express.static(__dirname));
 
 const PORT = 8000;
@@ -16,7 +16,7 @@ const server = app.listen(PORT, () => {
   console.log("server is listening at ", PORT);
 });
 
-// const {Server} =require("socket.io") 
+// const {Server} =require("socket.io")
 // const io = new Server(httpServer);
 
 const io = require("socket.io")(server, {
@@ -26,19 +26,4 @@ const io = require("socket.io")(server, {
   },
 });
 
-io.on("connection", (socket) => {
-  // console.log("connection is ready");
-
-  socket.on('send-message',(data)=>{
-    socket.broadcast.emit("message-from-server", data)
-  })
-
-  socket.on("typing-started-client",()=>{
-    socket.broadcast.emit("typing-from-server");
-  })
-
-  socket.on("typing-stopped",()=>{
-    socket.broadcast.emit("typing-stopped-from-server");
-  })
-  
-});
+io.on("connection", sockets );

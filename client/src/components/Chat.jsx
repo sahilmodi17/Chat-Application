@@ -3,11 +3,11 @@ import { useChatContext } from "./Context";
 
 const Chat = () => {
   const { chat , typing } = useChatContext();
-  console.log(chat);
+  // console.log(chat);
   return (
     <>
       <div className="py-2">
-        {chat.map((c, i) => {
+        {chat.map((c, i) => { 
           if (c.message) {
             if (c.received === true) {
               console.log(c.message);
@@ -44,7 +44,6 @@ const Chat = () => {
           }
         })}
 
-        {/* <div>Typing..</div> */}
       </div>
     </>
   );
